@@ -13,4 +13,5 @@
     <string name="title_activity_setup">SetupActivity</string>
     <string name="edit_message">Enter your name...</string>
     <string name="button_enter">Enter</string>
+    <string name="name">User</string>
 </resources>

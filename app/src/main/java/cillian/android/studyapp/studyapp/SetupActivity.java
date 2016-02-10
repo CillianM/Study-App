@@ -9,60 +9,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SetupActivity extends AppCompatActivity {
 
+    EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
-        EditText editText = (EditText) findViewById(R.id.nameBar);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        editText.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    // Perform action on key press
-                    setup();
-                    return true;
-                }
-                return false;
-            }
-        });
-
+        editText = (EditText) findViewById(R.id.nameBar);
     }
 
     //setup basic database
-    public void setup()
+    public void setup(View view)
     {
-        EditText editText = (EditText) findViewById(R.id.nameBar);
         String name = editText.getText().toString();
-        //table requires name, base level, best subject, worst subject
 
-        SQLiteDatabase myDB = this.openOrCreateDatabase("user", MODE_PRIVATE, null);
-
-         //Create a Table in the Database.
-        myDB.execSQL("CREATE TABLE IF NOT EXISTS"
-                + "user"
-                + " (Name VARCHAR, Level INT,BSubject VARCHAR,WSubject VARCHAR);");
-
-        //setup default user table
-        myDB.execSQL("INSERT INTO "
-                + "user"
-                + " (Name, Level,BSubject,WSubject)"
-                + " VALUES ('name', 1,null,null);");
-
-        //setup beginnings of subject table
-        myDB.execSQL("CREATE TABLE IF NOT EXISTS"
-                + "subjects"
-                + " (Name VARCHAR, Best_Time INT);");
+        DataHandler handler = new DataHandler(getBaseContext());
+        handler.open();
+        long id = handler.insertData(name);
+        handler.close();
+        Toast.makeText(getBaseContext(),"Profile Created!",Toast.LENGTH_LONG).show();
 
 
-        finish();
-
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
 
 
