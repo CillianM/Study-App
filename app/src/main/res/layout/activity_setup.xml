@@ -18,12 +18,24 @@
 
         />
 
+    <EditText
+        android:id="@+id/subjectBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:hint="@string/subject_message"
+        android:gravity="center_horizontal"
+
+        android:layout_below="@+id/nameBar"
+        android:layout_marginTop="20dp" />
+
     <Button
         android:id="@+id/enterButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_enter"
         android:onClick="setup"
-        android:layout_below="@+id/nameBar" />
+        android:layout_below="@+id/subjectBar"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>

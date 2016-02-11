@@ -7,6 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Cillian on 10/02/2016.
  */
@@ -16,11 +19,11 @@ public class SubjectHandler {
     public static final String BEST_TIME = "best_time";
     public static final String TOTAL_TIME = "total_time";
     public static final String TABLE_NAME = "subjects";
-    public static final String DATA_BASE_NAME = "myDB";
+    public static final String DATA_BASE_NAME = "subjectDB";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE_CREATE = "create table subjects (subject text not null, " +
                                               "best_time int not null," +
-                                              "total_time int not null,);";
+                                              "total_time int not null);";
 
     DataBaseHelper dbhelper;
     Context ctx;
@@ -74,17 +77,18 @@ public class SubjectHandler {
         dbhelper.close();
     }
 
-    public long insertData(String name)
+    public long insertData(String subject)
     {
         ContentValues content = new ContentValues();
-        content.put(SUBJECT,name);
+        content.put(SUBJECT,subject);
         content.put(BEST_TIME,0);
-        content.put(TOTAL_TIME,0);
-        return db.insert(TABLE_NAME,null,content);
+        content.put(TOTAL_TIME, 0);
+        return db.insert(TABLE_NAME, null, content);
     }
 
     public Cursor returnData()
     {
-        return db.query(TABLE_NAME,new String [] {SUBJECT,BEST_TIME,TOTAL_TIME},null,null,null,null,null);
+        return db.query(TABLE_NAME, new String[]{SUBJECT, BEST_TIME, TOTAL_TIME}, null, null, null, null, null);
     }
+
 }

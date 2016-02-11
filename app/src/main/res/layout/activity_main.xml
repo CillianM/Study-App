@@ -22,7 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/name"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        android:textSize="32sp" />
 
     <ImageView
         android:id="@+id/profile"
@@ -81,16 +82,28 @@
         android:layout_below="@+id/profile"
         android:layout_marginTop="15dp" />
 
+    <Spinner
+        android:id="@+id/subject_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/xpBar"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:layout_alignLeft="@+id/startButton"
+        android:layout_alignStart="@+id/startButton"
+        android:layout_alignRight="@+id/startButton"
+        android:layout_alignEnd="@+id/startButton" />
+
     <ImageButton
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_circle"
-        android:layout_below="@+id/xpBar"
+        android:layout_below="@+id/subject_list"
         android:contentDescription="@string/button"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="false"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:id="@+id/start_timer"
@@ -105,6 +118,17 @@
         android:layout_centerHorizontal="true"
         android:text="@string/start"
         android:gravity="center_horizontal"/>
+
+    <Button
+        android:onClick="subjects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startButton"
+        android:layout_alignLeft="@+id/startButton"
+        android:layout_alignStart="@+id/startButton"
+        android:layout_alignRight="@+id/startButton"
+        android:layout_alignEnd="@+id/startButton"
+        android:text="@string/subject_button" />
 
 </RelativeLayout>
 </ScrollView>

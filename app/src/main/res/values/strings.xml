@@ -14,4 +14,12 @@
     <string name="edit_message">Enter your name...</string>
     <string name="button_enter">Enter</string>
     <string name="name">User</string>
+    <string name="subject_message">Enter a subject you study...</string>
+    <string name="title_activity_subject">SubjectActivity</string>
+    <string name="Total_Time">0</string>
+    <string name="Total_Time_Label">Total Time</string>
+    <string name="Best_Subject">None</string>
+    <string name="Worst_Subject">None</string>
+    <string name="subject_button">See Subjects</string>
+    <string name="list_label">Subject List</string>
 </resources>

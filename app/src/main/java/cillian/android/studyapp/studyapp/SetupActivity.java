@@ -13,24 +13,33 @@ import android.widget.Toast;
 
 public class SetupActivity extends AppCompatActivity {
 
-    EditText editText;
+    EditText nameText;
+    EditText subjectText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
-        editText = (EditText) findViewById(R.id.nameBar);
+        nameText = (EditText) findViewById(R.id.nameBar);
+        subjectText = (EditText) findViewById(R.id.subjectBar);
     }
 
     //setup basic database
     public void setup(View view)
     {
-        String name = editText.getText().toString();
+        String name = nameText.getText().toString();
+        String subject = subjectText.getText().toString();
 
         DataHandler handler = new DataHandler(getBaseContext());
         handler.open();
         long id = handler.insertData(name);
         handler.close();
+
+        SubjectHandler S_handler = new SubjectHandler(getBaseContext());
+        S_handler.open();
+        long s_id = S_handler.insertData(subject);
+        S_handler.close();
         Toast.makeText(getBaseContext(),"Profile Created!",Toast.LENGTH_LONG).show();
 
 

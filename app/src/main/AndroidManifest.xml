@@ -24,6 +24,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cillian.android.studyapp.studyapp.MainActivity" />
         </activity>
+        <activity
+            android:name=".SubjectActivity"
+            android:label="@string/title_activity_subject"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cillian.android.studyapp.studyapp.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
