@@ -91,4 +91,19 @@ public class SubjectHandler {
         return db.query(TABLE_NAME, new String[]{SUBJECT, BEST_TIME, TOTAL_TIME}, null, null, null, null, null);
     }
 
+    public void removeData(String name)
+    {
+        db.delete(TABLE_NAME, SUBJECT + " = ?", new String[] { name });
+    }
+
+    public boolean updateData(String oldname,String newname,int bestTime,int totalTime)
+    {
+        ContentValues content = new ContentValues();
+        content.put(SUBJECT,newname);
+        content.put(BEST_TIME, bestTime);
+        content.put(TOTAL_TIME, totalTime);
+        db.update(TABLE_NAME,content,SUBJECT + " = ?", new String[] { oldname });
+        return true;
+    }
+
 }

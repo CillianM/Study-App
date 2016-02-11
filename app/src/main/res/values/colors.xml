@@ -2,7 +2,7 @@
 <resources>
     <color name="orange">#ff5500</color>
     <color name="white">#ffffff</color>
-    <color name="transparent">#00000000</color>
+    <color name="transparent">#00FFFFFF</color>
     <color name="date_color">#999999</color>
     <color name="black">#000000</color>
     <color name="gray">#999999</color>
@@ -14,4 +14,5 @@
     <color name="cachecolor">#8ad0e8</color>
     <color name="blue_green">#10b29b</color>
     <color name="brown">#9A6E3B</color>
+    <color name="greyed_out">#C0000000</color>
 </resources>

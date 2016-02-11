@@ -12,12 +12,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.ViewGroup.LayoutParams;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,9 +34,11 @@ public class MainActivity extends AppCompatActivity {
     TextView level_text;
     ProgressBar experienceBar;
     Spinner subjects;
+    PopupWindow addSubjectWindow;
     String name = "";
     String bestSubject = "";
     String worstSubject = "";
+    String subjectForTimer;
     int level = 0;
     int bestTime = 0;
     int experience = 0;
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         level_text = (TextView) findViewById(R.id.level_text);
         experienceBar = (ProgressBar) findViewById(R.id.xpBar);
         subjects = (Spinner) findViewById(R.id.subject_list);
+        addSubjectWindow = new PopupWindow(this);
         experienceBar.setMax(100);
 
 
@@ -63,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
             experienceBar.setMax(level * 10);
             experienceBar.setProgress(experience);
-
-            Toast.makeText(getBaseContext(), "best time is " + bestTime + " best subject is " + bestSubject + " worst subject is " + worstSubject, Toast.LENGTH_LONG).show();
 
         }
     }
@@ -103,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> subjectlist = new ArrayList<>();
         s_handler.open();
         Cursor c2 = s_handler.returnData();
-        subjectlist.add("Create new...");
+
         if(c2.moveToFirst())
         {
             do
@@ -112,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             }
             while(c2.moveToNext());
         }
-
+        subjectlist.add("Create new...");
         s_handler.close();
         createSpinner(subjectlist);
     }
@@ -120,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     public void createSpinner(ArrayList<String> subjectlist)
     {
         // Creating adapter for spinner
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
+        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, subjectlist);
 
         // Drop down layout style - list view with radio button
@@ -129,6 +136,29 @@ public class MainActivity extends AppCompatActivity {
 
         // attaching data adapter to spinner
         subjects.setAdapter(dataAdapter);
+
+        subjects.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selected = subjects.getSelectedItem().toString();
+
+                if(selected.equals("Create new..."))
+                {
+                    startActivity(new Intent(MainActivity.this,NewSubjectPopup.class));
+                }
+
+                else
+                {
+                    subjectForTimer = selected;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                //Nothing necessary here
+            }
+
+        });
     }
 
     public void subjects(View view) {

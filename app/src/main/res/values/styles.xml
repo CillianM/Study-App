@@ -33,4 +33,9 @@
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 
+    <style name="AppTheme.CustomTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
 </resources>
