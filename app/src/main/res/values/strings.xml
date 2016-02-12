@@ -10,7 +10,7 @@
     <string name="start">Start!</string>
     <string name="profile">profile image</string>
     <string name="profile_img">profile image</string>
-    <string name="title_activity_setup">Setup</string>
+    <string name="title_activity_setup">Enter your Name!</string>
     <string name="edit_message">Enter your name...</string>
     <string name="button_enter">Enter</string>
     <string name="name">User</string>
@@ -23,4 +23,12 @@
     <string name="subject_button">See Subjects</string>
     <string name="list_label">Subject List</string>
     <string name="selected_subject">Subject</string>
+    <string name="title_activity_add_subjects">Add Your Subjects!</string>
+    <string name="title_activity_timer">Study Timer</string>
+
+    <string name="timerVal">00:00:00</string>
+    <string name="pauseButtonLabel">Pause</string>
+    <string name="startButtonLabel">Start</string>
+    <string name="stopButtonLabel">Stop</string>
+    <string name="timerSubject">Subject</string>
 </resources>

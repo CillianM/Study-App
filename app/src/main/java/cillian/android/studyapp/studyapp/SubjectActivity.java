@@ -72,13 +72,14 @@ public class SubjectActivity extends AppCompatActivity {
         String stringTotal = totalTime + "";
         total.setText(stringTotal);
         worst.setText("Worst subject is " + worstSubject);
-        best.setText("Best subject is " +bestSubject);
+        best.setText("Best subject is " + bestSubject);
         createList(subjectlist);
     }
 
     @Override
     public void onBackPressed() {
-        finish();
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }
 
@@ -88,28 +89,28 @@ public class SubjectActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, subjectlist);
         subjects.setAdapter(dataAdapter);
 
-        subjects.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        subjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             //on item click create a url and open it in the browser
             public void onItemClick(AdapterView<?> l, View v, int position, long id) {
 
-            String chosenSubject =(String) l.getItemAtPosition(position);
-            Intent intent = new Intent(SubjectActivity.this, RemoveSubjectPopup.class);
+                String chosenSubject = (String) l.getItemAtPosition(position);
+                Intent intent = new Intent(SubjectActivity.this, RemoveSubjectPopup.class);
 
 
-            int index = chosenSubject.indexOf(" ");
-            String tmp = chosenSubject.substring(0, index);
-            intent.putExtra("clickedSubject",tmp);
-            chosenSubject = chosenSubject.substring(chosenSubject.indexOf(":"),chosenSubject.length());
-            tmp = chosenSubject.substring(2,3);
-            intent.putExtra("bestTime",tmp);
-            chosenSubject = chosenSubject.substring(3,chosenSubject.length());
-            chosenSubject = chosenSubject.substring(chosenSubject.indexOf(":"),chosenSubject.length());
-            tmp = chosenSubject.substring(2,3);
-            intent.putExtra("totalTime",tmp);
-            startActivity(intent);
+                int index = chosenSubject.indexOf(" ");
+                String tmp = chosenSubject.substring(0, index);
+                intent.putExtra("clickedSubject", tmp);
+                chosenSubject = chosenSubject.substring(chosenSubject.indexOf(":"), chosenSubject.length());
+                tmp = chosenSubject.substring(2, 3);
+                intent.putExtra("bestTime", tmp);
+                chosenSubject = chosenSubject.substring(3, chosenSubject.length());
+                chosenSubject = chosenSubject.substring(chosenSubject.indexOf(":"), chosenSubject.length());
+                tmp = chosenSubject.substring(2, 3);
+                intent.putExtra("totalTime", tmp);
+                startActivity(intent);
 
-        }
+            }
         });
     }
+
 }

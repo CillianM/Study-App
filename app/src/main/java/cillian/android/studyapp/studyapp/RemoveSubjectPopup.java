@@ -31,7 +31,7 @@ public class RemoveSubjectPopup extends Activity {
 
         int width = dm.widthPixels;
         int height = dm.heightPixels;
-        getWindow().setLayout((int) (width * .6), (int) (height * .4));
+        getWindow().setLayout((int) (width * .8), (int) (height * .4));
 
         Intent intent = getIntent();
         clickedSubject = intent.getStringExtra("clickedSubject");
@@ -55,7 +55,7 @@ public class RemoveSubjectPopup extends Activity {
         Shandler.open();
         Shandler.updateData(clickedSubject,changedSubject, bestTime,totalTime);
         Shandler.close();
-        done(v);
+        finish();
     }
 
     public void deleteSubject(View v)
@@ -70,7 +70,9 @@ public class RemoveSubjectPopup extends Activity {
 
     public void done(View v)
     {
-        Intent intent = new Intent(this,SubjectActivity.class);
+        Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }
+
+
 }

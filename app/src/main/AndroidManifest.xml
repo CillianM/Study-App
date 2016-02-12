@@ -32,17 +32,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cillian.android.studyapp.studyapp.MainActivity" />
         </activity>
-
         <activity
             android:name=".NewSubjectPopup"
-            android:theme="@style/AppTheme.CustomTheme">
+            android:theme="@style/AppTheme.CustomTheme" >
         </activity>
-
         <activity
             android:name=".RemoveSubjectPopup"
-            android:theme="@style/AppTheme.CustomTheme">
+            android:theme="@style/AppTheme.CustomTheme" >
         </activity>
-
+        <activity
+            android:name=".AddSubjects"
+            android:label="@string/title_activity_add_subjects" >
+        </activity>
+        <activity
+            android:name=".TimerActivity"
+            android:label="@string/title_activity_timer" >
+        </activity>
     </application>
 
 </manifest>

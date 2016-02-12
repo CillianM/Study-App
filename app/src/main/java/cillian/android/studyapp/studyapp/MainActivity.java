@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar experienceBar;
     Spinner subjects;
     PopupWindow addSubjectWindow;
+    ImageButton startButton;
     String name = "";
     String bestSubject = "";
     String worstSubject = "";
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     int level = 0;
     int bestTime = 0;
     int experience = 0;
+    int totalTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +54,14 @@ public class MainActivity extends AppCompatActivity {
         level_text = (TextView) findViewById(R.id.level_text);
         experienceBar = (ProgressBar) findViewById(R.id.xpBar);
         subjects = (Spinner) findViewById(R.id.subject_list);
+
         addSubjectWindow = new PopupWindow(this);
         experienceBar.setMax(100);
 
+        Intent timeIntent = getIntent();
+        String tmp = timeIntent.getStringExtra("time");
+        if(tmp != null)
+            totalTime = Integer.parseInt(tmp);
 
         if(!doesDatabaseExist(this,"myDB"))
         {
@@ -70,16 +78,22 @@ public class MainActivity extends AppCompatActivity {
             String levelText= level + "";
             level_text.setText(levelText);
 
-            experienceBar.setMax(level * 10);
-            experienceBar.setProgress(experience);
+            experienceBar.setMax(level * 60);
+            if(totalTime == 0)
+                experienceBar.setProgress(experience);
+
+            else
+                experienceBar.setProgress(totalTime / 60);
 
         }
+        startButton = (ImageButton) findViewById(R.id.startButton);
     }
 
     private static boolean doesDatabaseExist(Context context, String dbName) {
         File dbFile = context.getDatabasePath(dbName);
         return dbFile.exists();
     }
+
 
     public void getUserInfo()
     {
@@ -142,13 +156,9 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String selected = subjects.getSelectedItem().toString();
 
-                if(selected.equals("Create new..."))
-                {
-                    startActivity(new Intent(MainActivity.this,NewSubjectPopup.class));
-                }
-
-                else
-                {
+                if (selected.equals("Create new...")) {
+                    startActivity(new Intent(MainActivity.this, NewSubjectPopup.class));
+                } else {
                     subjectForTimer = selected;
                 }
             }
@@ -166,6 +176,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SubjectActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+    }
+
+    public void startTimer(View view)
+    {
+        Intent intent = new Intent(this, TimerActivity.class);
+        intent.putExtra("subject",subjectForTimer);
+        startActivity(intent);
+        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }
 
 }

@@ -11,8 +11,11 @@
         android:layout_height="wrap_content"
         android:text="@string/selected_subject"
         android:gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/submit" />
+        android:layout_above="@+id/submit"
+        android:layout_alignRight="@+id/submit"
+        android:layout_alignEnd="@+id/submit"
+        android:layout_alignLeft="@+id/submit"
+        android:layout_alignStart="@+id/submit" />
 
     <Button
         android:id="@+id/submit"

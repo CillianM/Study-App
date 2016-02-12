@@ -103,7 +103,8 @@
         android:contentDescription="@string/button"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="false"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        android:onClick="startTimer"/>
 
     <TextView
         android:id="@+id/start_timer"

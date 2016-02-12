@@ -94,6 +94,6 @@ public class DataHandler {
 
     public Cursor returnData()
     {
-        return db.query(TABLE_NAME,new String [] {NAME,LEVEL,EXPERIENCE,TOTAL_TIME,BEST_SUBJECT,WORST_SUBJECT},null,null,null,null,null);
+        return db.query(TABLE_NAME, new String[]{NAME, LEVEL, EXPERIENCE, TOTAL_TIME, BEST_SUBJECT, WORST_SUBJECT}, null, null, null, null, null);
     }
 }

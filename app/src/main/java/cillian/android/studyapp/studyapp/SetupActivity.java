@@ -29,23 +29,11 @@ public class SetupActivity extends AppCompatActivity {
     public void setup(View view)
     {
         String name = nameText.getText().toString();
-        String subject = subjectText.getText().toString();
 
-        DataHandler handler = new DataHandler(getBaseContext());
-        handler.open();
-        long id = handler.insertData(name);
-        handler.close();
-
-        SubjectHandler S_handler = new SubjectHandler(getBaseContext());
-        S_handler.open();
-        long s_id = S_handler.insertData(subject);
-        S_handler.close();
-        Toast.makeText(getBaseContext(),"Profile Created!",Toast.LENGTH_LONG).show();
-
-
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, AddSubjects.class);
+        intent.putExtra("name",name);
         startActivity(intent);
-        overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
+        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }
 
 
