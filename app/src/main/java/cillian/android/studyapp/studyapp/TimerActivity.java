@@ -10,15 +10,19 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class TimerActivity extends AppCompatActivity {
 
-    Button startButton;
-    Button pauseButton;
-    Button stopButton;
+    ImageButton startButton;
+    ImageButton pauseButton;
+    ImageButton stopButton;
     TextView timerValue;
+    ProgressBar circle;
     int secs= 0;
+    int hours = 0;
 
     long startTime = 0L;
 
@@ -36,21 +40,30 @@ public class TimerActivity extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.timerHeader);
         title.setText(intent.getStringExtra("subject"));
         timerValue = (TextView) findViewById(R.id.timerValue);
-        startButton = (Button) findViewById(R.id.startButton);
 
+        circle = (ProgressBar) findViewById(R.id.progressBar);
+        circle.setMax(999);
+        circle.setProgress(0);
+
+
+        startButton = (ImageButton) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startButton.setVisibility(View.GONE);
+                pauseButton.setVisibility(View.VISIBLE);
                 startTime = SystemClock.uptimeMillis();
                 handler.postDelayed(updateTimerThread, 0);
 
             }
         });
 
-        pauseButton = (Button) findViewById(R.id.pauseButton);
+        pauseButton = (ImageButton) findViewById(R.id.pauseButton);
         pauseButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
+                pauseButton.setVisibility(View.GONE);
+                startButton.setVisibility(View.VISIBLE);
                 timeSwapBuff += timeInMilliseconds;
 
                 handler.removeCallbacks(updateTimerThread);
@@ -58,7 +71,7 @@ public class TimerActivity extends AppCompatActivity {
 
         });
 
-        stopButton = (Button) findViewById(R.id.stopButton);
+        stopButton = (ImageButton) findViewById(R.id.stopButton);
 
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,9 +94,11 @@ public class TimerActivity extends AppCompatActivity {
             updatedTime = timeSwapBuff + timeInMilliseconds;
             secs = (int) (updatedTime / 1000);
             int mins = secs / 60;
+            int hours = mins % 60;
             secs = secs % 60;
             int milliseconds = (int) (updatedTime % 1000);
-            timerValue.setText("" + mins + ":" + String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
+            circle.setProgress(milliseconds);
+            timerValue.setText("" + String.format("%02d",hours) + ":" + String.format("%02d",mins) + ":" + String.format("%02d", secs));
             handler.postDelayed(this, 0);
         }
 
