@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
-/**
- * Created by Cillian on 11/02/2016.
- */
 public class RemoveSubjectPopup extends Activity {
 
     String changedSubject;
@@ -37,13 +33,6 @@ public class RemoveSubjectPopup extends Activity {
         clickedSubject = intent.getStringExtra("clickedSubject");
         bestTime = Integer.parseInt(intent.getStringExtra("bestTime"));
         totalTime = Integer.parseInt(intent.getStringExtra("totalTime"));
-
-
-
-        Button btnDismiss = (Button)findViewById(R.id.dismiss);
-        Button btnAdd = (Button)findViewById(R.id.submit);
-        Button btnDelete = (Button)findViewById(R.id.delete);
-
         currentSubject = (EditText)findViewById(R.id.subject);
         currentSubject.setText(clickedSubject);
     }

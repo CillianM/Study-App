@@ -4,12 +4,8 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +19,6 @@ public class TimerActivity extends AppCompatActivity {
     ProgressBar circle;
     int secs= 0;
     int TotalTime = 0;
-    int hours = 0;
     String subject;
 
     long startTime = 0L;
@@ -106,7 +101,8 @@ public class TimerActivity extends AppCompatActivity {
             TotalTime = mins + (hours * 60);
             int milliseconds = (int) (updatedTime % 1000);
             circle.setProgress(milliseconds);
-            timerValue.setText("" + String.format("%02d",hours) + ":" + String.format("%02d",mins) + ":" + String.format("%02d", secs));
+            String clockText = "" + String.format("%02d",hours) + ":" + String.format("%02d",mins) + ":" + String.format("%02d", secs);
+            timerValue.setText(clockText);
             handler.postDelayed(this, 0);
         }
 

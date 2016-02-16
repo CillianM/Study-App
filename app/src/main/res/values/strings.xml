@@ -31,4 +31,5 @@
     <string name="startButtonLabel">Start</string>
     <string name="stopButtonLabel">Stop</string>
     <string name="timerSubject">Subject</string>
+    <string name="experienceCount">0/60</string>
 </resources>

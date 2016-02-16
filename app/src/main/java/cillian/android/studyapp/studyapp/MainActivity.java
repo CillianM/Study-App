@@ -3,29 +3,16 @@ package cillian.android.studyapp.studyapp;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.view.ViewGroup.LayoutParams;
-
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -33,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView name_text;
     TextView level_text;
+    TextView experience_text;
     ProgressBar experienceBar;
     Spinner subjects;
     PopupWindow addSubjectWindow;
@@ -41,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     String subjectForTimer;
     int level = 0;
     int experience = 0;
-    int totalTime = 0;
     int experienceObtained = 0;
 
     @Override
@@ -52,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         level_text = (TextView) findViewById(R.id.level_text);
         experienceBar = (ProgressBar) findViewById(R.id.xpBar);
         subjects = (Spinner) findViewById(R.id.subject_list);
+        experience_text = (TextView) findViewById(R.id.experience);
 
         addSubjectWindow = new PopupWindow(this);
         experienceBar.setMax(100);
@@ -75,8 +63,11 @@ public class MainActivity extends AppCompatActivity {
             name_text.setText(name);
             String levelText= level + "";
             level_text.setText(levelText);
+            int xpCap = level * 60;
+            String progress = experience + " / " + xpCap;
+            experience_text.setText(progress);
 
-            experienceBar.setMax(level * 60);
+            experienceBar.setMax(xpCap);
             if(experienceObtained == 0)
                 experienceBar.setProgress(experience);
 

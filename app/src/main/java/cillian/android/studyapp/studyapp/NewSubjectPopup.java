@@ -5,12 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
-/**
- * Created by Cillian on 11/02/2016.
- */
 public class NewSubjectPopup extends Activity {
 
     String potentialSubject;
@@ -28,9 +24,6 @@ public class NewSubjectPopup extends Activity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
         getWindow().setLayout((int) (width * .6), (int) (height * .4));
-
-        Button btnDismiss = (Button)findViewById(R.id.dismiss);
-        Button btnAdd = (Button)findViewById(R.id.submit);
 
         newSubject = (EditText)findViewById(R.id.potentialSubject);
     }

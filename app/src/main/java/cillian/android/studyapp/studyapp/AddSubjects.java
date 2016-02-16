@@ -3,14 +3,11 @@ package cillian.android.studyapp.studyapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 public class AddSubjects extends AppCompatActivity {
@@ -60,7 +57,7 @@ public class AddSubjects extends AppCompatActivity {
     {
         DataHandler handler = new DataHandler(getBaseContext());
         handler.open();
-        long id = handler.insertData(name);
+        handler.insertData(name);
         handler.close();
 
         SubjectHandler S_handler = new SubjectHandler(getBaseContext());
@@ -70,7 +67,7 @@ public class AddSubjects extends AppCompatActivity {
 
         for(int i = 0; i < subjects.size(); i++)
         {
-            long s_id = S_handler.insertData(subjects.get(i));
+            S_handler.insertData(subjects.get(i));
         }
         S_handler.close();
         Toast.makeText(getBaseContext(), "Profile Created!", Toast.LENGTH_LONG).show();

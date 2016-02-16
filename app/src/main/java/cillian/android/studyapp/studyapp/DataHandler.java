@@ -7,9 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Cillian on 10/02/2016.
- */
 public class DataHandler {
 
     public static final String NAME = "name";

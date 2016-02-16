@@ -7,12 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by Cillian on 10/02/2016.
- */
 public class SubjectHandler {
 
     public static final String SUBJECT = "subject";
@@ -118,7 +112,7 @@ public class SubjectHandler {
 
     public boolean updateSubject(String subject, int time)
     {
-        Cursor cursor = null;
+        Cursor cursor;
         int oldbest = -1;
         int total = 0;
         cursor = db.rawQuery("SELECT best_time,total_time FROM subjects WHERE subject=?", new String[] {subject + ""});
@@ -132,10 +126,10 @@ public class SubjectHandler {
         cursor.close();
 
         total = total + time;
-        if(oldbest < time && oldbest != -1)
-            updateTime(subject,time,total);
-        else
+        if(oldbest > time && oldbest != -1)
             updateTime(subject,oldbest,total);
+        else
+            updateTime(subject,time,total);
         return true;
     }
 

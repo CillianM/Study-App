@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,8 +17,8 @@ public class SubjectActivity extends AppCompatActivity {
     int totalTime;
     String bestSubject;
     String worstSubject;
-    int low;
-    int high;
+    int low = 0;
+    int high = 0;
 
     TextView worst;
     TextView best;
@@ -42,25 +40,18 @@ public class SubjectActivity extends AppCompatActivity {
     {
         SubjectHandler s_handler = new SubjectHandler(getBaseContext());
         ArrayList<String> subjectlist = new ArrayList<>();
+        ArrayList<String> subjects = new ArrayList<>();
+        ArrayList<Integer> times = new ArrayList<>();
         s_handler.open();
         Cursor c2 = s_handler.returnData();
         if(c2.moveToFirst())
         {
             do
             {
-                subjectlist.add(c2.getString(0)+" - Best Time: "+ c2.getInt(1) + "  Total Time: " + c2.getInt(2));
+                subjectlist.add(c2.getString(0)+" - Longest Streak: "+ c2.getInt(1) + " Total Time: " + c2.getInt(2));
 
-                if(c2.getInt(1) >= high)
-                {
-                    bestSubject = c2.getString(0);
-                    high = c2.getInt(1);
-                }
-
-                if(c2.getInt(1) <= low)
-                {
-                    worstSubject = c2.getString(0);
-                    low = c2.getInt(1);
-                }
+                subjects.add(c2.getString(0));
+                times.add(c2.getInt(1));
 
                 totalTime = totalTime + c2.getInt(2);
 
@@ -69,10 +60,30 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         s_handler.close();
+        low = times.get(0);
+        high = times.get(0);
+        bestSubject = subjects.get(0);
+        worstSubject = subjects.get(0);
+        for(int i = 0; i < subjects.size(); i++)
+        {
+            if(times.get(i) < low)
+            {
+                worstSubject = subjects.get(i);
+                high = times.get(i);
+            }
+
+            if(times.get(i) > high)
+            {
+                bestSubject = subjects.get(i);
+                low = times.get(i);
+            }
+        }
         String stringTotal = totalTime + "";
         total.setText(stringTotal);
-        worst.setText("Worst subject is " + worstSubject);
-        best.setText("Best subject is " + bestSubject);
+        String subjectHeader = "Worst subject is " + worstSubject;
+        worst.setText(subjectHeader);
+        subjectHeader = "Best subject is " + bestSubject;
+        best.setText(subjectHeader);
         createList(subjectlist);
     }
 
