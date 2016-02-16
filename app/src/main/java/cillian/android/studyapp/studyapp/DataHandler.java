@@ -80,11 +80,20 @@ public class DataHandler {
         content.put(NAME,name);
         content.put(LEVEL,1);
         content.put(EXPERIENCE,0);
-        return db.insert(TABLE_NAME,null,content);
+        return db.insert(TABLE_NAME, null, content);
     }
 
     public Cursor returnData()
     {
         return db.query(TABLE_NAME, new String[]{NAME, LEVEL, EXPERIENCE}, null, null, null, null, null);
+    }
+
+    public boolean levelUp(String name,String newLevel, String experienceGained)
+    {
+        ContentValues content = new ContentValues();
+        content.put(LEVEL, newLevel);
+        content.put(EXPERIENCE, experienceGained);
+        db.update(TABLE_NAME, content, NAME + " = ?", new String[]{name});
+        return true;
     }
 }

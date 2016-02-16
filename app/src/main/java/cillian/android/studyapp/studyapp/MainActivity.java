@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     int level = 0;
     int experience = 0;
     int totalTime = 0;
+    int experienceObtained = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Intent timeIntent = getIntent();
         String tmp = timeIntent.getStringExtra("time");
         if(tmp != null)
-            totalTime = Integer.parseInt(tmp);
+            experienceObtained = Integer.parseInt(tmp);
 
         if(!doesDatabaseExist(this,"myDB"))
         {
@@ -76,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
             level_text.setText(levelText);
 
             experienceBar.setMax(level * 60);
-            if(totalTime == 0)
+            if(experienceObtained == 0)
                 experienceBar.setProgress(experience);
 
             else
-                experienceBar.setProgress(totalTime);
+                calculateExperience();
 
         }
         startButton = (ImageButton) findViewById(R.id.startButton);
@@ -179,6 +180,41 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
     }
 
+    public void calculateExperience()
+    {
+        int newLevel = level;
+        int totalExperience = experience + experienceObtained;
+        if(totalExperience > level * 60)
+        {
+            for (int i = 1; i < level; i++) {
+                totalExperience = totalExperience + (i * 60);
+            }
+            newLevel = 1;
+            while(totalExperience - (newLevel * 60) > 0)
+            {
+                if (totalExperience - (newLevel * 60) < 0)
+                    break;
+                else {
+                    totalExperience = totalExperience - (newLevel * 60);
+                    newLevel++;
+                }
+            }
+            experienceBar.setMax(newLevel * 60);
+        }
+
+        experienceBar.setProgress(totalExperience);
+        DataHandler handler = new DataHandler(getBaseContext());
+        handler.open();
+        handler.levelUp(name, newLevel + "", totalExperience + "");
+        handler.close();
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+
+    }
+
 }
 
+//get the current level the user is at and calculate that experience that it would have taken
+/*to get there then add on the rest of the experince and claculate what level that would be and whats left over
+this can be done with division and modulus of the expereince gained in total*/
 

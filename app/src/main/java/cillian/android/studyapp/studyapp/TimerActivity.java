@@ -103,7 +103,7 @@ public class TimerActivity extends AppCompatActivity {
             int mins = secs / 60 % 60;
             int hours = mins / 60;
             secs = secs % 60;
-            TotalTime = (secs / 60) + mins + (hours * 60);
+            TotalTime = mins + (hours * 60);
             int milliseconds = (int) (updatedTime % 1000);
             circle.setProgress(milliseconds);
             timerValue.setText("" + String.format("%02d",hours) + ":" + String.format("%02d",mins) + ":" + String.format("%02d", secs));
