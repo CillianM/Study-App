@@ -51,26 +51,31 @@ public class RemoveSubjectPopup extends Activity {
     public void updateSubject(View v)
     {
         changedSubject = currentSubject.getText().toString();
-        SubjectHandler Shandler = new SubjectHandler(getBaseContext());
-        Shandler.open();
-        Shandler.updateData(clickedSubject,changedSubject, bestTime,totalTime);
-        Shandler.close();
-        finish();
+        if(changedSubject.length() > 0) {
+            SubjectHandler Shandler = new SubjectHandler(getBaseContext());
+            Shandler.open();
+            Shandler.updateData(clickedSubject, changedSubject, bestTime, totalTime);
+            Shandler.close();
+            done(v);
+        }
     }
 
     public void deleteSubject(View v)
     {
+
         changedSubject = currentSubject.getText().toString();
-        SubjectHandler Shandler = new SubjectHandler(getBaseContext());
-        Shandler.open();
-        Shandler.removeData(changedSubject);
-        Shandler.close();
-        done(v);
+        if(changedSubject.length() > 0) {
+            SubjectHandler Shandler = new SubjectHandler(getBaseContext());
+            Shandler.open();
+            Shandler.removeData(changedSubject);
+            Shandler.close();
+            done(v);
+        }
     }
 
     public void done(View v)
     {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,SubjectActivity.class);
         startActivity(intent);
     }
 

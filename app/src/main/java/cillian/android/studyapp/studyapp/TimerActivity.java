@@ -22,7 +22,9 @@ public class TimerActivity extends AppCompatActivity {
     TextView timerValue;
     ProgressBar circle;
     int secs= 0;
+    int TotalTime = 0;
     int hours = 0;
+    String subject;
 
     long startTime = 0L;
 
@@ -38,7 +40,8 @@ public class TimerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timer);
         Intent intent = getIntent();
         TextView title = (TextView) findViewById(R.id.timerHeader);
-        title.setText(intent.getStringExtra("subject"));
+        subject = intent.getStringExtra("subject");
+        title.setText(subject);
         timerValue = (TextView) findViewById(R.id.timerValue);
 
         circle = (ProgressBar) findViewById(R.id.progressBar);
@@ -77,7 +80,11 @@ public class TimerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TimerActivity.this,MainActivity.class);
-                String tmp = secs + "";
+                SubjectHandler handler = new SubjectHandler(getBaseContext());
+                handler.open();
+                handler.updateSubject(subject,TotalTime);
+                handler.close();
+                String tmp = TotalTime + "";
                 intent.putExtra("time",tmp);
                 startActivity(intent);
             }
@@ -93,9 +100,10 @@ public class TimerActivity extends AppCompatActivity {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
             secs = (int) (updatedTime / 1000);
-            int mins = secs / 60;
-            int hours = mins % 60;
+            int mins = secs / 60 % 60;
+            int hours = mins / 60;
             secs = secs % 60;
+            TotalTime = (secs / 60) + mins + (hours * 60);
             int milliseconds = (int) (updatedTime % 1000);
             circle.setProgress(milliseconds);
             timerValue.setText("" + String.format("%02d",hours) + ":" + String.format("%02d",mins) + ":" + String.format("%02d", secs));
@@ -105,5 +113,6 @@ public class TimerActivity extends AppCompatActivity {
     };
 
 
-
 }
+
+

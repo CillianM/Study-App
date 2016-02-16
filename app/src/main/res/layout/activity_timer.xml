@@ -42,21 +42,15 @@
     <TextView
 
     android:id="@+id/timerValue"
-
     android:layout_width="fill_parent"
-
     android:layout_height="wrap_content"
-
-        android:layout_centerHorizontal="true"
-
-        android:textSize="30sp"
-
+    android:layout_centerHorizontal="true"
+    android:textSize="30sp"
     android:textColor="@color/black"
-
     android:text="@string/timerVal"
-        android:gravity="center_horizontal"
-        android:layout_alignParentTop="false"
-        android:layout_marginTop="125dp" />
+    android:gravity="center_horizontal"
+    android:layout_alignParentTop="false"
+    android:layout_marginTop="125dp" />
 
     <View
         android:layout_width="match_parent"

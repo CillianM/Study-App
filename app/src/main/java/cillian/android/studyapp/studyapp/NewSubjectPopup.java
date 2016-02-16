@@ -38,11 +38,13 @@ public class NewSubjectPopup extends Activity {
     public void addSubject(View v)
     {
         potentialSubject = newSubject.getText().toString();
-        SubjectHandler Shandler = new SubjectHandler(getBaseContext());
-        Shandler.open();
-        Shandler.insertData(potentialSubject);
-        Shandler.close();
-        done(v);
+        if(potentialSubject.length() > 0) {
+            SubjectHandler Shandler = new SubjectHandler(getBaseContext());
+            Shandler.open();
+            Shandler.insertData(potentialSubject);
+            Shandler.close();
+            done(v);
+        }
     }
 
     public void done(View v)

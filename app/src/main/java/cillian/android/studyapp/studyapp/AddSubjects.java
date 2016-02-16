@@ -39,11 +39,14 @@ public class AddSubjects extends AppCompatActivity {
     public void add(View view)
     {
         String newSubject = currentSubject.getText().toString();
-        subjects.add(newSubject);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, subjects);
-        subjectList.setAdapter(dataAdapter);
-        currentSubject.setText("");
+        if(newSubject.length() > 0)
+        {
+            subjects.add(newSubject);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
+                    android.R.layout.simple_list_item_1, subjects);
+            subjectList.setAdapter(dataAdapter);
+            currentSubject.setText("");
+        }
     }
 
     @Override

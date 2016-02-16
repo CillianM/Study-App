@@ -38,11 +38,8 @@ public class MainActivity extends AppCompatActivity {
     PopupWindow addSubjectWindow;
     ImageButton startButton;
     String name = "";
-    String bestSubject = "";
-    String worstSubject = "";
     String subjectForTimer;
     int level = 0;
-    int bestTime = 0;
     int experience = 0;
     int totalTime = 0;
 
@@ -83,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 experienceBar.setProgress(experience);
 
             else
-                experienceBar.setProgress(totalTime / 60);
+                experienceBar.setProgress(totalTime);
 
         }
         startButton = (ImageButton) findViewById(R.id.startButton);
@@ -107,10 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 name = c1.getString(0);
                 level = c1.getInt(1);
                 experience = c1.getInt(2);
-                bestTime = c1.getInt(3);
-                bestSubject = c1.getString(4);
-                worstSubject = c1.getString(5);
-
             }
             while(c1.moveToNext());
         }

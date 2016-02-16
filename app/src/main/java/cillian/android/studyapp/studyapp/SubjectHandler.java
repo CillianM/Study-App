@@ -102,7 +102,40 @@ public class SubjectHandler {
         content.put(SUBJECT,newname);
         content.put(BEST_TIME, bestTime);
         content.put(TOTAL_TIME, totalTime);
-        db.update(TABLE_NAME,content,SUBJECT + " = ?", new String[] { oldname });
+        db.update(TABLE_NAME, content, SUBJECT + " = ?", new String[]{oldname});
+        return true;
+    }
+
+    public boolean updateTime(String name,int bestTime,int totalTime)
+    {
+        ContentValues content = new ContentValues();
+        content.put(SUBJECT,name);
+        content.put(BEST_TIME, bestTime);
+        content.put(TOTAL_TIME, totalTime);
+        db.update(TABLE_NAME, content, SUBJECT + " = ?", new String[]{name});
+        return true;
+    }
+
+    public boolean updateSubject(String subject, int time)
+    {
+        Cursor cursor = null;
+        int oldbest = -1;
+        int total = 0;
+        cursor = db.rawQuery("SELECT best_time,total_time FROM subjects WHERE subject=?", new String[] {subject + ""});
+
+        if(cursor.getCount() > 0) {
+
+            cursor.moveToFirst();
+            oldbest= cursor.getInt(cursor.getColumnIndex("best_time"));
+            total = cursor.getInt(cursor.getColumnIndex("total_time"));
+        }
+        cursor.close();
+
+        total = total + time;
+        if(oldbest < time && oldbest != -1)
+            updateTime(subject,time,total);
+        else
+            updateTime(subject,oldbest,total);
         return true;
     }
 

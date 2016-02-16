@@ -15,18 +15,12 @@ public class DataHandler {
     public static final String NAME = "name";
     public static final String LEVEL = "level";
     public static final String EXPERIENCE = "experience_points";
-    public static final String TOTAL_TIME = "total_time";
-    public static final String BEST_SUBJECT = "best_subject";
-    public static final String WORST_SUBJECT = "worst_subject";
     public static final String TABLE_NAME = "user";
     public static final String DATA_BASE_NAME = "myDB";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE_CREATE = "create table user (name text not null, " +
                                                                     "level int not null," +
-                                                                    "experience_points int not null," +
-                                                                    "total_time int not null," +
-                                                                    "best_subject text not null," +
-                                                                    "worst_subject text not null);";
+                                                                    "experience_points int not null);";
 
     DataBaseHelper dbhelper;
     Context ctx;
@@ -86,14 +80,11 @@ public class DataHandler {
         content.put(NAME,name);
         content.put(LEVEL,1);
         content.put(EXPERIENCE,0);
-        content.put(TOTAL_TIME,0);
-        content.put(BEST_SUBJECT,"none");
-        content.put(WORST_SUBJECT, "none");
         return db.insert(TABLE_NAME,null,content);
     }
 
     public Cursor returnData()
     {
-        return db.query(TABLE_NAME, new String[]{NAME, LEVEL, EXPERIENCE, TOTAL_TIME, BEST_SUBJECT, WORST_SUBJECT}, null, null, null, null, null);
+        return db.query(TABLE_NAME, new String[]{NAME, LEVEL, EXPERIENCE}, null, null, null, null, null);
     }
 }

@@ -97,8 +97,8 @@ public class SubjectActivity extends AppCompatActivity {
                 Intent intent = new Intent(SubjectActivity.this, RemoveSubjectPopup.class);
 
 
-                int index = chosenSubject.indexOf(" ");
-                String tmp = chosenSubject.substring(0, index);
+                int index = chosenSubject.indexOf("-");
+                String tmp = chosenSubject.substring(0, index -1);
                 intent.putExtra("clickedSubject", tmp);
                 chosenSubject = chosenSubject.substring(chosenSubject.indexOf(":"), chosenSubject.length());
                 tmp = chosenSubject.substring(2, 3);
