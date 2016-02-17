@@ -28,6 +28,8 @@ public class TimerActivity extends AppCompatActivity {
     long timeInMilliseconds = 0L;
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
+    long pausedTime = 0L;
+    long stopTime = 0L;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -85,6 +87,28 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    protected void onPause() {
+        super.onPause();
+        pausedTime = SystemClock.uptimeMillis();
+    }
+
+    protected void onStop() {
+        super.onStop();
+        stopTime = SystemClock.uptimeMillis() + pausedTime;
+    }
+
+    protected void onResume() {
+        super.onResume();
+        if(timeSwapBuff > 0) {
+           timeSwapBuff += pausedTime + timeInMilliseconds + stopTime;
+        }
+    }
+
+    protected void onRestart() {
+        super.onRestart();
+        onResume();
     }
 
     private Runnable updateTimerThread = new Runnable() {
