@@ -16,6 +16,10 @@ public class AddSubjects extends AppCompatActivity {
     ListView subjectList;
     EditText currentSubject;
     String name;
+    String skin;
+    String eyes;
+    String shirt;
+    String pants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,10 @@ public class AddSubjects extends AppCompatActivity {
 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
+        skin = intent.getStringExtra("character");
+        eyes = intent.getStringExtra("eyes");
+        shirt = intent.getStringExtra("shirt");
+        pants = intent.getStringExtra("pants");
         subjects = intent.getStringArrayListExtra("subjectList");
         if(subjects == null)
             subjects = new ArrayList<>();
@@ -48,7 +56,7 @@ public class AddSubjects extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this,SetupActivity.class);
+        Intent intent = new Intent(this,CharacterSetup.class);
         startActivity(intent);
         overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_right);
     }
@@ -57,7 +65,7 @@ public class AddSubjects extends AppCompatActivity {
     {
         DataHandler handler = new DataHandler(getBaseContext());
         handler.open();
-        handler.insertData(name);
+        handler.insertData(name,skin,eyes,shirt,pants);
         handler.close();
 
         SubjectHandler S_handler = new SubjectHandler(getBaseContext());

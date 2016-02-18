@@ -13,9 +13,17 @@ public class DataHandler {
     public static final String LEVEL = "level";
     public static final String EXPERIENCE = "experience_points";
     public static final String TABLE_NAME = "user";
+    public static final String EYES = "eyes";
+    public static final String SHIRT = "shirt";
+    public static final String SKIN = "skin";
+    public static final String PANTS = "pants";
     public static final String DATA_BASE_NAME = "myDB";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE_CREATE = "create table user (name text not null, " +
+                                                                    "skin text not null, " +
+                                                                    "eyes text not null, " +
+                                                                    "shirt text not null, " +
+                                                                    "pants text not null, " +
                                                                     "level int not null," +
                                                                     "experience_points int not null);";
 
@@ -71,18 +79,22 @@ public class DataHandler {
         dbhelper.close();
     }
 
-    public long insertData(String name)
+    public long insertData(String name, String skin,String eyes, String shirt, String pants)
     {
         ContentValues content = new ContentValues();
         content.put(NAME,name);
+        content.put(SKIN,skin);
+        content.put(EYES,eyes);
+        content.put(SHIRT,shirt);
+        content.put(PANTS,pants);
         content.put(LEVEL,1);
-        content.put(EXPERIENCE,0);
+        content.put(EXPERIENCE, 0);
         return db.insert(TABLE_NAME, null, content);
     }
 
     public Cursor returnData()
     {
-        return db.query(TABLE_NAME, new String[]{NAME, LEVEL, EXPERIENCE}, null, null, null, null, null);
+        return db.query(TABLE_NAME, new String[]{NAME, SKIN, EYES, SHIRT, PANTS, LEVEL, EXPERIENCE}, null, null, null, null, null);
     }
 
     public boolean levelUp(String name,String newLevel, String experienceGained)
@@ -91,6 +103,18 @@ public class DataHandler {
         content.put(LEVEL, newLevel);
         content.put(EXPERIENCE, experienceGained);
         db.update(TABLE_NAME, content, NAME + " = ?", new String[]{name});
+        return true;
+    }
+
+    public boolean changeProfile(String oldname,String newName,String skin, String eyes,String shirt,String pants)
+    {
+        ContentValues content = new ContentValues();
+        content.put(NAME, newName);
+        content.put(SKIN, skin);
+        content.put(EYES, eyes);
+        content.put(SHIRT, shirt);
+        content.put(PANTS, pants);
+        db.update(TABLE_NAME, content, NAME + " = ?", new String[]{oldname});
         return true;
     }
 }

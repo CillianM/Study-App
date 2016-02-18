@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -21,12 +24,20 @@ public class MainActivity extends AppCompatActivity {
     TextView name_text;
     TextView level_text;
     TextView experience_text;
+    ImageView skin_pic;
+    ImageView eye_pic;
+    ImageView shirt_pic;
+    ImageView pants_pic;
     ProgressBar experienceBar;
     Spinner subjects;
     PopupWindow addSubjectWindow;
     ImageButton startButton;
     String name = "";
     String subjectForTimer;
+    String skin;
+    String eyes;
+    String shirt;
+    String pants;
     int level = 0;
     int experience = 0;
     int experienceObtained = 0;
@@ -35,11 +46,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(!doesDatabaseExist(this,"myDB"))
+        {
+            Intent intent = new Intent(this,SetupActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        }
+        else
+        {
         name_text = (TextView) findViewById(R.id.name);
         level_text = (TextView) findViewById(R.id.level_text);
         experienceBar = (ProgressBar) findViewById(R.id.xpBar);
         subjects = (Spinner) findViewById(R.id.subject_list);
         experience_text = (TextView) findViewById(R.id.experience);
+        skin_pic = (ImageView) findViewById(R.id.profile_pic);
+        eye_pic = (ImageView) findViewById(R.id.profile_eyes);
+        shirt_pic = (ImageView) findViewById(R.id.profile_shirt);
+        pants_pic = (ImageView) findViewById(R.id.profile_pants);
 
         addSubjectWindow = new PopupWindow(this);
         experienceBar.setMax(100);
@@ -49,17 +72,12 @@ public class MainActivity extends AppCompatActivity {
         if(tmp != null)
             experienceObtained = Integer.parseInt(tmp);
 
-        if(!doesDatabaseExist(this,"myDB"))
-        {
-            Intent intent = new Intent(this,SetupActivity.class);
-            startActivity(intent);
-            overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
-        }
 
-        else
-        {
+
+
             getUserInfo();
             getSubjects();
+            setPic();
             name_text.setText(name);
             String levelText= level + "";
             level_text.setText(levelText);
@@ -78,6 +96,32 @@ public class MainActivity extends AppCompatActivity {
         startButton = (ImageButton) findViewById(R.id.startButton);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0,1,0,"User Settings");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == 1) {
+            Intent intent = new Intent(this,ProfileSettings.class);
+            intent.putExtra("username",name);
+            intent.putExtra("character",skin);
+            intent.putExtra("eyes",eyes);
+            intent.putExtra("shirt",shirt);
+            intent.putExtra("pants",pants);
+            startActivity(intent);
+        }
+
+        return true;
+    }
+
     private static boolean doesDatabaseExist(Context context, String dbName) {
         File dbFile = context.getDatabasePath(dbName);
         return dbFile.exists();
@@ -94,8 +138,12 @@ public class MainActivity extends AppCompatActivity {
             do
             {
                 name = c1.getString(0);
-                level = c1.getInt(1);
-                experience = c1.getInt(2);
+                skin = c1.getString(1);
+                eyes = c1.getString(2);
+                shirt = c1.getString(3);
+                pants = c1.getString(4);
+                level = c1.getInt(5);
+                experience = c1.getInt(6);
             }
             while(c1.moveToNext());
         }
@@ -154,6 +202,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    public void setPic()
+    {
+        skin_pic.setImageResource((getResources().getIdentifier("profile_" +skin, "drawable", getPackageName())));
+        eye_pic.setImageResource((getResources().getIdentifier("eyes_" +eyes, "drawable", getPackageName())));
+        shirt_pic.setImageResource((getResources().getIdentifier("shirt_" +shirt, "drawable", getPackageName())));
+        pants_pic.setImageResource((getResources().getIdentifier("pants_" +pants, "drawable", getPackageName())));
+
     }
 
     public void subjects(View view) {

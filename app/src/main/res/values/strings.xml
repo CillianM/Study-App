@@ -32,4 +32,12 @@
     <string name="stopButtonLabel">Stop</string>
     <string name="timerSubject">Subject</string>
     <string name="experienceCount">0/60</string>
+    <string name="title_activity_character_setup">CharacterSetup</string>
+    <string name="BackButton">BackButton</string>
+    <string name="ForwardButton">ForwardButton</string>
+    <string name="BodyText">Body</string>
+    <string name="EyesText">Eyes</string>
+    <string name="ShirtText">Shirt</string>
+    <string name="PantsText">Pants</string>
+    <string name="title_activity_profile_settings">ProfileSettings</string>
 </resources>

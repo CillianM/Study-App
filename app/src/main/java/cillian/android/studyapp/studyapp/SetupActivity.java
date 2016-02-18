@@ -24,11 +24,12 @@ public class SetupActivity extends AppCompatActivity {
     public void setup(View view)
     {
         String name = nameText.getText().toString();
-
-        Intent intent = new Intent(this, AddSubjects.class);
-        intent.putExtra("name",name);
-        startActivity(intent);
-        overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        if(name.length() > 0) {
+            Intent intent = new Intent(this, CharacterSetup.class);
+            intent.putExtra("name", name);
+            startActivity(intent);
+            overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+        }
     }
 
 

@@ -37,16 +37,66 @@
         android:id="@+id/profile_pic"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignTop="@+id/profile"
-        android:layout_alignLeft="@+id/profile"
-        android:layout_alignStart="@+id/profile"
-        android:layout_alignRight="@+id/profile"
-        android:layout_alignEnd="@+id/profile"
         android:layout_marginTop="55dp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:src="@drawable/profile"
-        android:contentDescription="@string/profile_img" />
+        android:src="@drawable/profile_1"
+        android:contentDescription="@string/profile_img"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignTop="@+id/profile" />
+
+    <ImageView
+        android:id="@+id/profile_eyes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:src="@drawable/eyes_1"
+        android:contentDescription="@string/profile_img"
+        android:layout_alignRight="@+id/profile_pic"
+        android:layout_alignEnd="@+id/profile_pic"
+        android:layout_alignLeft="@+id/profile_pic"
+        android:layout_alignStart="@+id/profile_pic"
+        android:layout_marginLeft="19dp"
+        android:layout_marginRight="19dp"
+        android:layout_alignTop="@+id/profile_pic"
+        android:layout_alignBottom="@+id/profile_pic"
+        android:layout_marginBottom="30dp" />
+
+    <ImageView
+        android:id="@+id/profile_shirt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:src="@drawable/shirt_4"
+        android:contentDescription="@string/profile_img"
+        android:layout_alignRight="@+id/profile_pic"
+        android:layout_alignEnd="@+id/profile_pic"
+        android:layout_alignLeft="@+id/profile_pic"
+        android:layout_alignStart="@+id/profile_pic"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignBottom="@+id/profile"
+        android:layout_alignTop="@+id/profile_pic"
+        android:layout_marginBottom="7dp" />
+
+    <ImageView
+        android:id="@+id/profile_pants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:src="@drawable/pants_2"
+        android:contentDescription="@string/profile_img"
+        android:layout_alignRight="@+id/profile_pic"
+        android:layout_alignEnd="@+id/profile_pic"
+        android:layout_alignLeft="@+id/profile_pic"
+        android:layout_alignStart="@+id/profile_pic"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_alignBottom="@+id/profile"
+        android:layout_alignTop="@+id/profile_pic"
+        android:layout_marginTop="30dp" />
 
     <ImageView
         android:id="@+id/level_button"

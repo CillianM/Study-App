@@ -48,6 +48,22 @@
             android:name=".TimerActivity"
             android:label="@string/title_activity_timer" >
         </activity>
+        <activity
+            android:name=".CharacterSetup"
+            android:label="@string/title_activity_character_setup"
+            android:parentActivityName=".SetupActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cillian.android.studyapp.studyapp.SetupActivity" />
+        </activity>
+        <activity
+            android:name=".ProfileSettings"
+            android:label="@string/title_activity_profile_settings"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cillian.android.studyapp.studyapp.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

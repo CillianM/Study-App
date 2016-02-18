@@ -29,7 +29,7 @@ public class TimerActivity extends AppCompatActivity {
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
     long pausedTime = 0L;
-    long stopTime = 0L;
+    long resumedTime = 0L;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -38,6 +38,8 @@ public class TimerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         TextView title = (TextView) findViewById(R.id.timerHeader);
         subject = intent.getStringExtra("subject");
+        if(subject.length() > 9)
+            subject = subject.substring(0,7) + "..";
         title.setText(subject);
         timerValue = (TextView) findViewById(R.id.timerValue);
 
@@ -89,29 +91,32 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
-    protected void onPause() {
+    /*protected void onPause() {
         super.onPause();
-        pausedTime = SystemClock.uptimeMillis();
-    }
+        timeSwapBuff += timeInMilliseconds;
+        pausedTime =SystemClock.uptimeMillis();
+        handler.removeCallbacks(updateTimerThread);
+    }*/
 
-    protected void onStop() {
+    protected void onStop()
+    {
         super.onStop();
-        stopTime = SystemClock.uptimeMillis() + pausedTime;
+        timeSwapBuff += timeInMilliseconds;
+        pausedTime =SystemClock.uptimeMillis();
+        handler.removeCallbacks(updateTimerThread);
     }
 
     protected void onResume() {
         super.onResume();
+        resumedTime = SystemClock.uptimeMillis()- pausedTime;
         if(timeSwapBuff > 0) {
-           timeSwapBuff += pausedTime + timeInMilliseconds + stopTime;
+            timeSwapBuff += resumedTime;
+            startTime = SystemClock.uptimeMillis();
+            handler.postDelayed(updateTimerThread, 0);
         }
     }
 
-    protected void onRestart() {
-        super.onRestart();
-        onResume();
-    }
-
-    private Runnable updateTimerThread = new Runnable() {
+    public Runnable updateTimerThread = new Runnable() {
 
 
 
