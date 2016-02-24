@@ -80,6 +80,11 @@ public class AddSubjects extends AppCompatActivity {
         S_handler.close();
         Toast.makeText(getBaseContext(), "Profile Created!", Toast.LENGTH_LONG).show();
 
+        TimeHandler T_handler = new TimeHandler(getBaseContext());
+        T_handler.open();
+        T_handler.insertData();
+        T_handler.close();
+
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
     }

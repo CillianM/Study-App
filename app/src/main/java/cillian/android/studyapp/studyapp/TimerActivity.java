@@ -1,5 +1,6 @@
 package cillian.android.studyapp.studyapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +31,7 @@ public class TimerActivity extends AppCompatActivity {
     long updatedTime = 0L;
     long pausedTime = 0L;
     long resumedTime = 0L;
-
+    boolean skipInitialGet = false;
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,14 @@ public class TimerActivity extends AppCompatActivity {
         if(subject.length() > 9)
             subject = subject.substring(0,7) + "..";
         title.setText(subject);
+
+        String tmp = intent.getStringExtra("startTime");
+        if(tmp != null) {
+            startTime = Long.parseLong(intent.getStringExtra("startTime"));
+            timeSwapBuff = Long.parseLong(intent.getStringExtra("buff"));
+            skipInitialGet = true;
+        }
+
         timerValue = (TextView) findViewById(R.id.timerValue);
 
         circle = (ProgressBar) findViewById(R.id.progressBar);
@@ -54,7 +63,10 @@ public class TimerActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startButton.setVisibility(View.GONE);
                 pauseButton.setVisibility(View.VISIBLE);
-                startTime = SystemClock.uptimeMillis();
+
+                if(!skipInitialGet)
+                    startTime = SystemClock.uptimeMillis();
+
                 handler.postDelayed(updateTimerThread, 0);
 
             }
@@ -91,29 +103,16 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
-    /*protected void onPause() {
-        super.onPause();
-        timeSwapBuff += timeInMilliseconds;
-        pausedTime =SystemClock.uptimeMillis();
-        handler.removeCallbacks(updateTimerThread);
-    }*/
-
-    protected void onStop()
+    protected void onPause()
     {
-        super.onStop();
-        timeSwapBuff += timeInMilliseconds;
-        pausedTime =SystemClock.uptimeMillis();
-        handler.removeCallbacks(updateTimerThread);
-    }
-
-    protected void onResume() {
-        super.onResume();
-        resumedTime = SystemClock.uptimeMillis()- pausedTime;
-        if(timeSwapBuff > 0) {
-            timeSwapBuff += resumedTime;
-            startTime = SystemClock.uptimeMillis();
-            handler.postDelayed(updateTimerThread, 0);
-        }
+        super.onPause();
+        TimeHandler t = new TimeHandler(getBaseContext());
+        t.open();
+        t.updateTime(1+"",startTime,timeSwapBuff);
+        t.close();
+        Handler mHandler = new Handler();
+        Context appContext = getApplicationContext();
+        mHandler.post(new DisplayNotification(appContext));
     }
 
     public Runnable updateTimerThread = new Runnable() {
