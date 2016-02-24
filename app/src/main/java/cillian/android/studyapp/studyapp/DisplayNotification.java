@@ -20,7 +20,6 @@ public class DisplayNotification implements Runnable {
 
     Context mContext;
     NotificationManager mNotificationManager;
-    int NOTIFICATION_ID = 1;
 
     String timerValue;
     int secs= 0;
@@ -42,9 +41,6 @@ public class DisplayNotification implements Runnable {
     }
 
     private void makeNotification(Context context) {
-        Intent intent = new Intent(context, TimerActivity.class);
-        //subject = intent.getStringExtra("subject");
-        //startTime = Long.parseLong(intent.getStringExtra("startTime"));
 
         TimeHandler t = new TimeHandler(context);
         t.open();
@@ -53,8 +49,9 @@ public class DisplayNotification implements Runnable {
         {
             do
             {
-                startTime = c2.getLong(1);
-                timeSwapBuff = c2.getLong(2);
+                subject = c2.getString(1);
+                startTime = c2.getLong(2);
+                timeSwapBuff = c2.getLong(3);
 
             }
             while(c2.moveToNext());
@@ -62,14 +59,13 @@ public class DisplayNotification implements Runnable {
         t.close();
 
         getTime();
+        Intent intent = new Intent().setClass(context, TimerActivity.class);
+        intent.setAction("foo");
         intent.putExtra("subject", subject);
-        intent.putExtra("startTime", startTime);
-        intent.putExtra("buff", timeSwapBuff);
+        intent.putExtra("startTime", startTime+"");
+        intent.putExtra("buff", timeSwapBuff+"");
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-
+                0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 
         Notification.Builder builder = new Notification.Builder(context)
@@ -77,12 +73,13 @@ public class DisplayNotification implements Runnable {
                 .setContentText(timerValue)
                 .setSmallIcon(R.drawable.clock_icon)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
+                .setOngoing(true);
 
 
-        NotificationManager notificationManager;
+
         Notification n;
-        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             n = builder.build();
         } else {
@@ -91,10 +88,10 @@ public class DisplayNotification implements Runnable {
 
         n.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 
-        notificationManager.notify(NOTIFICATION_ID, n);
-
+        mNotificationManager.notify(0, n);
 
     }
+
 
     public void getTime()
     {

@@ -1,5 +1,7 @@
 package cillian.android.studyapp.studyapp;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
@@ -32,18 +34,26 @@ public class TimerActivity extends AppCompatActivity {
     long pausedTime = 0L;
     long resumedTime = 0L;
     boolean skipInitialGet = false;
+    boolean isFinished = false;
+
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_timer);
         Intent intent = getIntent();
         TextView title = (TextView) findViewById(R.id.timerHeader);
-        subject = intent.getStringExtra("subject");
-        if(subject.length() > 9)
-            subject = subject.substring(0,7) + "..";
-        title.setText(subject);
+        String tmp =intent.getStringExtra("subject");
+        if(tmp != null) {
+            subject = tmp;
+            if (subject.length() > 9)
+                subject = subject.substring(0, 7) + "..";
+            title.setText(subject);
+        }
 
-        String tmp = intent.getStringExtra("startTime");
+
+
+        tmp = intent.getStringExtra("startTime");
         if(tmp != null) {
             startTime = Long.parseLong(intent.getStringExtra("startTime"));
             timeSwapBuff = Long.parseLong(intent.getStringExtra("buff"));
@@ -66,6 +76,11 @@ public class TimerActivity extends AppCompatActivity {
 
                 if(!skipInitialGet)
                     startTime = SystemClock.uptimeMillis();
+                else
+                {
+                    pauseButton.setVisibility(View.GONE);
+                    startButton.setVisibility(View.VISIBLE);
+                }
 
                 handler.postDelayed(updateTimerThread, 0);
 
@@ -90,6 +105,7 @@ public class TimerActivity extends AppCompatActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isFinished = true;
                 Intent intent = new Intent(TimerActivity.this,MainActivity.class);
                 SubjectHandler handler = new SubjectHandler(getBaseContext());
                 handler.open();
@@ -101,18 +117,31 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
+        if(skipInitialGet)
+            handler.postDelayed(updateTimerThread, 0);
     }
 
     protected void onPause()
     {
         super.onPause();
-        TimeHandler t = new TimeHandler(getBaseContext());
-        t.open();
-        t.updateTime(1+"",startTime,timeSwapBuff);
-        t.close();
-        Handler mHandler = new Handler();
-        Context appContext = getApplicationContext();
-        mHandler.post(new DisplayNotification(appContext));
+        if(!isFinished) {
+            TimeHandler t = new TimeHandler(getBaseContext());
+            t.open();
+            t.updateTime(1 + "", subject, startTime, timeSwapBuff);
+            t.close();
+            Handler mHandler = new Handler();
+            Context appContext = getBaseContext();
+            mHandler.post(new DisplayNotification(appContext));
+        }
+    }
+
+    protected  void onResume()
+    {
+        super.onResume();
+        //close notification if it still exists (from tabbing in over actually clicking notification
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(0);
     }
 
     public Runnable updateTimerThread = new Runnable() {
