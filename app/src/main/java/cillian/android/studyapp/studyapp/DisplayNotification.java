@@ -76,7 +76,8 @@ public class DisplayNotification implements Runnable {
                 .setContentTitle(subject)
                 .setContentText(timerValue)
                 .setSmallIcon(R.drawable.clock_icon)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
 
         NotificationManager notificationManager;
