@@ -33,6 +33,7 @@ public class DisplayNotification implements Runnable {
         this.mContext = mContext;
         mNotificationManager = (NotificationManager)
                 mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
     }
 
     @Override
@@ -68,6 +69,7 @@ public class DisplayNotification implements Runnable {
                 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 
+        int notifyID = 1;
         Notification.Builder builder = new Notification.Builder(context)
                 .setContentTitle(subject)
                 .setContentText(timerValue)
@@ -88,7 +90,7 @@ public class DisplayNotification implements Runnable {
 
         n.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
 
-        mNotificationManager.notify(0, n);
+        mNotificationManager.notify(notifyID, n);
 
     }
 
