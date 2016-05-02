@@ -105,15 +105,24 @@ public class TimerActivity extends AppCompatActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                //close notification if it still exists (from tabbing in over actually clicking notification
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.cancelAll();   //ISSUE: need to click stop button twice for notification to close
+
                 isFinished = true;
                 Intent intent = new Intent(TimerActivity.this,MainActivity.class);
                 SubjectHandler handler = new SubjectHandler(getBaseContext());
                 handler.open();
-                handler.updateSubject(subject,TotalTime);
+                handler.updateSubject(subject, TotalTime);
                 handler.close();
                 String tmp = TotalTime + "";
-                intent.putExtra("time",tmp);
+                intent.putExtra("time", tmp);
                 startActivity(intent);
+
+
             }
         });
 
@@ -130,10 +139,7 @@ public class TimerActivity extends AppCompatActivity {
     protected  void onResume()
     {
         super.onResume();
-        //close notification if it still exists (from tabbing in over actually clicking notification
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(0);
+
     }
 
     public Runnable updateTimerThread = new Runnable() {
