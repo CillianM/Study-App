@@ -124,15 +124,7 @@ public class TimerActivity extends AppCompatActivity {
     protected void onPause()
     {
         super.onPause();
-        if(!isFinished) {
-            TimeHandler t = new TimeHandler(getBaseContext());
-            t.open();
-            t.updateTime(1 + "", subject, startTime, timeSwapBuff);
-            t.close();
-            Handler mHandler = new Handler();
-            Context appContext = getBaseContext();
-            mHandler.post(new DisplayNotification(appContext));
-        }
+        //moved notification code to public Runnable updateTimerThread
     }
 
     protected  void onResume()
@@ -161,6 +153,17 @@ public class TimerActivity extends AppCompatActivity {
             String clockText = "" + String.format("%02d",hours) + ":" + String.format("%02d",mins) + ":" + String.format("%02d", secs);
             timerValue.setText(clockText);
             handler.postDelayed(this, 0);
+
+            //create notification
+            if(!isFinished) {
+            TimeHandler t = new TimeHandler(getBaseContext());
+            t.open();
+            t.updateTime(1 + "", subject, startTime, timeSwapBuff);
+            t.close();
+            Handler mHandler = new Handler();
+            Context appContext = getBaseContext();
+            mHandler.post(new DisplayNotification(appContext));
+        }
         }
 
     };
