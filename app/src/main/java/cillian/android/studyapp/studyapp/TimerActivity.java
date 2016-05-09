@@ -105,15 +105,24 @@ public class TimerActivity extends AppCompatActivity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                //close notification if it still exists (from tabbing in over actually clicking notification
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.cancelAll();   //ISSUE: need to click stop button twice for notification to close
+
                 isFinished = true;
                 Intent intent = new Intent(TimerActivity.this,MainActivity.class);
                 SubjectHandler handler = new SubjectHandler(getBaseContext());
                 handler.open();
-                handler.updateSubject(subject,TotalTime);
+                handler.updateSubject(subject, TotalTime);
                 handler.close();
                 String tmp = TotalTime + "";
-                intent.putExtra("time",tmp);
+                intent.putExtra("time", tmp);
                 startActivity(intent);
+
+
             }
         });
 
@@ -124,24 +133,13 @@ public class TimerActivity extends AppCompatActivity {
     protected void onPause()
     {
         super.onPause();
-        if(!isFinished) {
-            TimeHandler t = new TimeHandler(getBaseContext());
-            t.open();
-            t.updateTime(1 + "", subject, startTime, timeSwapBuff);
-            t.close();
-            Handler mHandler = new Handler();
-            Context appContext = getBaseContext();
-            mHandler.post(new DisplayNotification(appContext));
-        }
+        //moved notification code to public Runnable updateTimerThread
     }
 
     protected  void onResume()
     {
         super.onResume();
-        //close notification if it still exists (from tabbing in over actually clicking notification
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(0);
+
     }
 
     public Runnable updateTimerThread = new Runnable() {
@@ -161,6 +159,17 @@ public class TimerActivity extends AppCompatActivity {
             String clockText = "" + String.format("%02d",hours) + ":" + String.format("%02d",mins) + ":" + String.format("%02d", secs);
             timerValue.setText(clockText);
             handler.postDelayed(this, 0);
+
+            //create notification
+            if(!isFinished) {
+            TimeHandler t = new TimeHandler(getBaseContext());
+            t.open();
+            t.updateTime(1 + "", subject, startTime, timeSwapBuff);
+            t.close();
+            Handler mHandler = new Handler();
+            Context appContext = getBaseContext();
+            mHandler.post(new DisplayNotification(appContext));
+        }
         }
 
     };
